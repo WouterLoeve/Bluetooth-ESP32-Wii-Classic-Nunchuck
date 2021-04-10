@@ -29,4 +29,10 @@ menu "Temperature Server Configuration"
         help
             Server + route the ESP should send requests to
 
+    config ESP_DEEPSLEEP_TIME_MINUTES
+        int "Deepsleep time in minutes"
+        default 15
+        help
+            Sets the amount of time spent in deepsleep between temperature polls
+
 endmenu

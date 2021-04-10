@@ -1928,6 +1928,16 @@
                 "range": null,
                 "title": "Server IP Address",
                 "type": "string"
+            },
+            {
+                "children": [],
+                "depends_on": null,
+                "help": "Sets the amount of time spent in deepsleep between temperature polls",
+                "id": "ESP_DEEPSLEEP_TIME_MINUTES",
+                "name": "ESP_DEEPSLEEP_TIME_MINUTES",
+                "range": null,
+                "title": "Deepsleep time in minutes",
+                "type": "int"
             }
         ],
         "depends_on": null,
