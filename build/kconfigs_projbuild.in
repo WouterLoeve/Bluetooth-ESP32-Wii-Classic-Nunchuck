@@ -1,6 +1,0 @@
-source "/media/linuxHDD/ESP/esp-idf/components/app_update/Kconfig.projbuild"
-source "/media/linuxHDD/ESP/esp-idf/components/bootloader/Kconfig.projbuild"
-source "/media/linuxHDD/ESP/esp-idf/components/esp_rom/Kconfig.projbuild"
-source "/media/linuxHDD/ESP/esp-idf/components/esptool_py/Kconfig.projbuild"
-source "/media/linuxHDD/ESP/esp-idf/components/partition_table/Kconfig.projbuild"
-source "/media/linuxHDD/ESP/ESP32-Temperature-Sensor/main/Kconfig.projbuild"
