@@ -13,6 +13,7 @@
 1. Cleanup + improvement LoRa building blocks
     - Message lengths
     - Data format
+    - move options to kconfig
 2. Message guarantees
     - msg-id
     - ack
