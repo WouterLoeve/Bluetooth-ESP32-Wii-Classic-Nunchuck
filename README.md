@@ -4,10 +4,18 @@
 1. Install esp-idf: https://docs.espressif.com/projects/esp-idf/en/latest/esp32/get-started/linux-setup.html
 2. Go to settings.h: and uncomment the board definition
 3. Execute ```idf.py menuconfig```
-4. Go to Temperature Configuration and edit the variables to your heart's content.
-5. Long-press boot while executing ```idf.py flash```.
-6. Execute ```idf.py monitor``` while holding boot
-7. Press Reset button to reboot
+4. Go to Component config and edit the lora configuration variables to your heart's content. The configuration we use:
+```c
+const lmic_pinmap lmic_pins = {
+  .nss = 18,
+  .rst = 14,
+  .dio = { 26, 34, 35 },
+  .spi = { /* MISO = */ 19, /* MOSI = */ 27, /* SCK = */ 5 },
+  .rxtx = LMIC_UNUSED_PIN,
+};
+```
+5. Execute ```idf.py flash```.
+6. Execute ```idf.py monitor```
 
 ## Todos
 1. Cleanup + improvement LoRa building blocks
