@@ -10,13 +10,4 @@
 // #define SERVER_ADDR         CONFIG_ESP_SERVER_ADDR
 // #define DEEPSLEEP_MIN       CONFIG_ESP_DEEPSLEEP_TIME_MINUTES
 
-// const lmic_pinmap lmic_pins = {
-//   .nss = 18,
-//   .rst = 14,
-//   .dio = { 26, 34, 35 },
-//   .spi = { /* MISO = */ 19, /* MOSI = */ 27, /* SCK = */ 5 },
-//   .rxtx = LMIC_UNUSED_PIN,
-// };
-
-
 #endif /* SETTINGS_H */
