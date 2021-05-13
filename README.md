@@ -19,14 +19,16 @@ const lmic_pinmap lmic_pins = {
 
 ## Todos
 1. Cleanup + improvement LoRa building blocks
-    - Message lengths
-    - Data format
-    - move options to kconfig
+    - [*] Message lengths
+    - [*] Data format
+    - [*] move options to kconfig
 2. Message guarantees
-    - msg-id
-    - ack
-    - timeout sending
+    - [*] msg-id
+    - [*] ack
+    - [ ] timeout sending
 3. Game
+    - [ ] Broadcast for finding people to play with
+    - [ ] tic tac toe
 4. Screen
 5. Gold plating
     - Encryption
