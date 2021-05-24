@@ -23,12 +23,13 @@ const lmic_pinmap lmic_pins = {
     - [*] Data format
     - [*] move options to kconfig
 2. Message guarantees
-    - [*] msg-id
-    - [*] ack
-    - [ ] timeout sending
+    - [x] msg-id
+    - [x] ack
+    - [x] timeout sending
 3. Game
     - [ ] Broadcast for finding people to play with
     - [ ] tic tac toe
+    - [ ] message sequence numbers with retrospective resend
 4. Screen
 5. Gold plating
     - Encryption
