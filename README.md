@@ -19,9 +19,9 @@ const lmic_pinmap lmic_pins = {
 
 ## Todos
 1. Cleanup + improvement LoRa building blocks
-    - [*] Message lengths
-    - [*] Data format
-    - [*] move options to kconfig
+    - [x] Message lengths
+    - [x] Data format
+    - [x] move options to kconfig
 2. Message guarantees
     - [x] msg-id
     - [x] ack
@@ -46,9 +46,14 @@ Below is short explanation of remaining files in the project folder.
 
 ```
 ├── CMakeLists.txt
-├── components/lora            LoRa module
+├── components
+│   ├── /lora            LoRa module
+│   ├── /lwr             LoRaWrapper library
+│   └── /tarablessd1306  OLed drawing lib: https://github.com/TaraHoleInIt/tarablessd1306
 ├── main
 │   ├── CMakeLists.txt         Add any new source files here
 │   └── main.c                 HTTP 
 └── README.md                  This is the file you are currently reading
 ```
+
+Oled drawing Wiki: https://github.com/TaraHoleInIt/tarablessd1306/wiki/Drawing
