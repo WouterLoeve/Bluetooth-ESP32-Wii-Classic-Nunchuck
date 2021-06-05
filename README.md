@@ -2,9 +2,10 @@
 
 ## How to run
 1. Install esp-idf: https://docs.espressif.com/projects/esp-idf/en/latest/esp32/get-started/linux-setup.html
-2. Go to settings.h: and uncomment the board definition
-3. Execute ```idf.py menuconfig```
-4. Go to Component config and edit the lora configuration variables to your heart's content. The configuration we use:
+2. Clone https://github.com/TaraHoleInIt/tarablessd1306 from components dir
+3. Go to settings.h: and uncomment the board definition
+4. Execute ```idf.py menuconfig```
+5. Go to Component config and edit the lora configuration variables to your heart's content. The configuration we use:
 ```c
 const lmic_pinmap lmic_pins = {
   .nss = 18,
@@ -14,8 +15,8 @@ const lmic_pinmap lmic_pins = {
   .rxtx = LMIC_UNUSED_PIN,
 };
 ```
-5. Execute ```idf.py flash```.
-6. Execute ```idf.py monitor```
+6. Execute ```idf.py flash```.
+7. Execute ```idf.py monitor```
 
 ## Todos
 1. Cleanup + improvement LoRa building blocks

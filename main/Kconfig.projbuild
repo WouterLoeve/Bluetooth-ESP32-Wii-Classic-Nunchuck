@@ -4,16 +4,16 @@ menu "LORA Configuration"
         default "myssid"
         help
             SSID (network name) for the example to connect to.
-
-    config ESP_MESSAGE_RECV_BUFFER_SIZE
-        int "MESSAGE_RECV_BUFFER_SIZE"
-        default 512
-        help
-            Number of bytes the receive buffer should be.
     
     config OLED_USE_I2C_DISPLAY
         bool "OLED_USE_I2C_DISPLAY"
         default true
         help
             Whether to use I2C instead of SPI
+
+    config PLAY_REMOTE
+        bool "PLAY_REMOTE"
+        default false
+        help
+            Whether we should wait for remote input
 endmenu
