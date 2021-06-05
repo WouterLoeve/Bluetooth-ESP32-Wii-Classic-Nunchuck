@@ -29,9 +29,9 @@ const lmic_pinmap lmic_pins = {
     - [x] timeout sending
 3. Game
     - [ ] Broadcast for finding people to play with
-    - [ ] tic tac toe
+    - [x] tic tac toe
     - [ ] message sequence numbers with retrospective resend
-4. Screen
+4. - [x] Screen
 5. Gold plating
     - Encryption
 
