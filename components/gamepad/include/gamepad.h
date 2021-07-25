@@ -7,17 +7,21 @@
 #include "NimBLECharacteristic.h"
 
 class Gamepad : public NimBLEServerCallbacks {
-    private:
+private:
     NimBLEServer* server;
     NimBLEHIDDevice* hid;
     NimBLECharacteristic* input;
     NimBLEAdvertising* advertising;
     NimBLESecurity *security;
 
-    public:
+public:
     Gamepad();
     void onConnect(NimBLEServer* pServer);
     void onDisconnect(NimBLEServer* pServer);
+    void sendReport();
+
+protected:
+    virtual void onStarted(NimBLEServer *pServer) { };
 };
 
 #endif
