@@ -15,25 +15,22 @@ extern "C" {
 
 void app_main() {
 	BleGamepad *gp = new BleGamepad();
-	gp->begin(16, 1, true, true, false, true, true, false, false, false, false, false, false, false, false);
+	gp->begin(16, 1, true, true, true, true, false, false, false, false, false, false, false, false, false);
 	while(true) {
-		gp->setAxes(32767, 0, 0, 0, 0, 0, 0, 0, DPAD_CENTERED);
+
+		// (x, y, x2, y2, ?, ?, ?, ?, DPAD)
+		gp->setAxes(32767, 0, 32767/2, 32767/4, 0, 0, 0, 0, DPAD_UP_RIGHT);
+		
+		// vTaskDelay(pdMS_TO_TICKS(5000));
+		// gp->setAxes(0, 32767, 0, 0, 0, 32767, 0, 0, DPAD_RIGHT);
 
 		vTaskDelay(pdMS_TO_TICKS(5000));
-		gp->setAxes(0, 32767, 0, 0, 0, 0, 0, 0, DPAD_CENTERED);
-
-		vTaskDelay(pdMS_TO_TICKS(5000));
-		gp->setAxes(0, 0, 0, 0, 0, 0, 0, 0, DPAD_RIGHT);
+		gp->setAxes(0, 0, 0, 0, 0, 0, 0, 0, DPAD_CENTERED);
 
 		//gp->press(BUTTON_5);
 		//gp->press(BUTTON_16);
-		//gp->setAxes(32767, 32767, 0, 32767, 32767, 0, 0, 0, DPAD_DOWN_RIGHT);
-		// All axes, sliders, hats etc can also be set independently. See the IndividualAxes.ino example
-		vTaskDelay(pdMS_TO_TICKS(5000));
 
 		//gp->release(BUTTON_5);
-		//gp->setAxes(-32767, -32767, -32767, -32767, -32767, -32767, -32767, -32767, DPAD_CENTERED);
-		//vTaskDelay(pdMS_TO_TICKS(500));
 	}
 }
 
