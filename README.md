@@ -23,7 +23,7 @@ Below is short explanation of remaining files in the project folder.
 ├── components
 │   ├── /lora            LoRa module
 │   ├── /lwr             LoRaWrapper library
-│   └── /tarablessd1306  OLed drawing lib: https://github.com/TaraHoleInIt/tarablessd1306
+│   └── /BleGamepad      Fork of Gamepad lib: https://github.com/lemmingDev/ESP32-BLE-Gamepad
 ├── main
 │   ├── CMakeLists.txt         Add any new source files here
 │   └── main.c                 HTTP 

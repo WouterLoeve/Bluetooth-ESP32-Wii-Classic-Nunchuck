@@ -7,16 +7,33 @@
 #include "esp_log.h"
 
 #include "thumbstick.h"
-#include "gamepad.h"
+#include "BleGamepad.h"
 
 extern "C" {
 	void app_main();
 }
 
 void app_main() {
-	Gamepad *gp = new Gamepad();
+	BleGamepad *gp = new BleGamepad();
+	gp->begin(16, 1, true, true, false, true, true, false, false, false, false, false, false, false, false);
 	while(true) {
-		vTaskDelay(pdMS_TO_TICKS(100));
+		gp->setAxes(32767, 0, 0, 0, 0, 0, 0, 0, DPAD_CENTERED);
+
+		vTaskDelay(pdMS_TO_TICKS(5000));
+		gp->setAxes(0, 32767, 0, 0, 0, 0, 0, 0, DPAD_CENTERED);
+
+		vTaskDelay(pdMS_TO_TICKS(5000));
+		gp->setAxes(0, 0, 0, 0, 0, 0, 0, 0, DPAD_RIGHT);
+
+		//gp->press(BUTTON_5);
+		//gp->press(BUTTON_16);
+		//gp->setAxes(32767, 32767, 0, 32767, 32767, 0, 0, 0, DPAD_DOWN_RIGHT);
+		// All axes, sliders, hats etc can also be set independently. See the IndividualAxes.ino example
+		vTaskDelay(pdMS_TO_TICKS(5000));
+
+		//gp->release(BUTTON_5);
+		//gp->setAxes(-32767, -32767, -32767, -32767, -32767, -32767, -32767, -32767, DPAD_CENTERED);
+		//vTaskDelay(pdMS_TO_TICKS(500));
 	}
 }
 
