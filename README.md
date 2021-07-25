@@ -1,39 +1,12 @@
-# ESP32-LoRa
+# ESP32-BCC
 
 ## How to run
 1. Install esp-idf: https://docs.espressif.com/projects/esp-idf/en/latest/esp32/get-started/linux-setup.html
-2. Clone https://github.com/TaraHoleInIt/tarablessd1306 from components dir
+2. Clone git@github.com:h2zero/esp-nimble-cpp.git from components dir
 3. Go to settings.h: and uncomment the board definition
 4. Execute ```idf.py menuconfig```
-5. Go to Component config and edit the lora configuration variables to your heart's content. The configuration we use:
-```c
-const lmic_pinmap lmic_pins = {
-  .nss = 18,
-  .rst = 14,
-  .dio = { 26, 34, 35 },
-  .spi = { /* MISO = */ 19, /* MOSI = */ 27, /* SCK = */ 5 },
-  .rxtx = LMIC_UNUSED_PIN,
-};
-```
-6. Execute ```idf.py flash```.
-7. Execute ```idf.py monitor```
+5. Go to Component config->Bluetooth enable Bluetooth and in Bluetooth host NimBLE.
 
-## Todos
-1. Cleanup + improvement LoRa building blocks
-    - [x] Message lengths
-    - [x] Data format
-    - [x] move options to kconfig
-2. Message guarantees
-    - [x] msg-id
-    - [x] ack
-    - [x] timeout sending
-3. Game
-    - [ ] Broadcast for finding people to play with
-    - [x] tic tac toe
-    - [ ] message sequence numbers with retrospective resend
-4. - [x] Screen
-5. Gold plating
-    - Encryption
 
 ## Folder contents
 
