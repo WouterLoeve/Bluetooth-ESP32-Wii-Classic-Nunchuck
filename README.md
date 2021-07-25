@@ -5,7 +5,7 @@
 2. Clone git@github.com:h2zero/esp-nimble-cpp.git from components dir
 3. Go to settings.h: and uncomment the board definition
 4. Execute ```idf.py menuconfig```
-5. Go to Component config and edit the lora configuration variables to your heart's content. The configuration we use:
+5. Go to Component config->Bluetooth enable Bluetooth and in Bluetooth host NimBLE.
 
 
 ## Folder contents
