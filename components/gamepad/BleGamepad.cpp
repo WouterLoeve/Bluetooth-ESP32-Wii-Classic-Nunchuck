@@ -845,5 +845,5 @@ void BleGamepad::taskServer(void* pvParameter)
   BleGamepadInstance->hid->setBatteryLevel(BleGamepadInstance->batteryLevel);
 
   ESP_LOGD(LOG_TAG, "Advertising started!");
-  vTaskDelay(portMAX_DELAY); //delay(portMAX_DELAY);
+  vTaskDelay(portMAX_DELAY);
 }
