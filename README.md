@@ -10,7 +10,7 @@
 
 ## Folder contents
 
-The project **ESP32-LoRa** contains one source file in C language [main.c](main/main.c). The file is located in folder [main](main).
+The project **ESP32-Wii-Classic** contains one source file in C language [main.c](main/main.c). The file is located in folder [main](main).
 
 ESP-IDF projects are built using CMake. The project build configuration is contained in `CMakeLists.txt`
 files that provide set of directives and instructions describing the project's source files and targets
@@ -21,12 +21,12 @@ Below is short explanation of remaining files in the project folder.
 ```
 ├── CMakeLists.txt
 ├── components
-│   ├── /lora            LoRa module
-│   ├── /lwr             LoRaWrapper library
+│   ├── /esp32-wii-nunchuck Fork of nunchuck library: git@github.com:moefh/esp32-wii-nunchuk.git
+│   ├── /esp-nimble-cpp  esp nimble BLE library
 │   └── /BleGamepad      Fork of Gamepad lib: https://github.com/lemmingDev/ESP32-BLE-Gamepad
 ├── main
 │   ├── CMakeLists.txt         Add any new source files here
-│   └── main.c                 HTTP 
+│   └── main.cpp                 
 └── README.md                  This is the file you are currently reading
 ```
 

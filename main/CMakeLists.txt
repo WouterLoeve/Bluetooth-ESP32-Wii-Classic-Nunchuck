@@ -1,3 +1,3 @@
 idf_component_register(SRCS "main.cpp"
     INCLUDE_DIRS "." 
-    REQUIRES "gamepad" "thumbstick")
+    REQUIRES "gamepad" "esp32-wii-nunchuk")
