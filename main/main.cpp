@@ -35,19 +35,50 @@ int scaleInput(int value, float max_val, int max_output) {
 	return value / max_val * max_output;
 }
 
+void get_dpad(wii_i2c_classic_state state, unsigned char *dpad) {
+	ESP_LOGD("main", "up, down, left, right = (%d,%d,%d,%d)\n", state.up, state.down, state.left, state.right);
+	if (state.up) {
+		*dpad = DPAD_UP;
+		if (state.left) {
+			*dpad = DPAD_UP_LEFT;
+		} else if (state.right) {
+			*dpad = DPAD_UP_RIGHT;
+		} else if (state.down) {
+			*dpad = DPAD_CENTERED;
+		}
+	} else if (state.down) {
+		*dpad = DPAD_DOWN;
+		if (state.left) {
+			*dpad = DPAD_DOWN_LEFT;
+		} else if (state.right) {
+			*dpad = DPAD_DOWN_RIGHT;
+		}
+	} else if (state.left) {
+		*dpad = DPAD_LEFT;
+	} else if (state.right) {
+		*dpad = DPAD_RIGHT;
+	}
+
+	ESP_LOGI("main", "dpad: %d\n", *dpad);
+}
+
 void show_classic(const unsigned char *data)
 {
 	wii_i2c_classic_state state;
 	wii_i2c_decode_classic(data, &state);
 
-	// ESP_LOGI("main", "lx,ly = (%3d,%3d)\n", state.lx, state.ly);
-	// ESP_LOGI("main", "rx,ry = (%3d,%3d)\n", state.rx, state.ry);
-	// ESP_LOGI("main", "a lt,rt = (%3d,%3d)\n", state.a_lt, state.a_rt);
-	// ESP_LOGI("main", "d lt,rt = (%d,%d)\n", state.d_lt, state.d_rt);
-	// ESP_LOGI("main", "a,b,x,y = (%d,%d,%d,%d)\n", state.a, state.b, state.x, state.y);
-	// ESP_LOGI("main", "up, down, left, right = (%d,%d,%d,%d)\n", state.up, state.down, state.left, state.right);
-	// ESP_LOGI("main", "home, plus, minus = (%d,%d,%d)\n", state.home, state.plus, state.minus);
-	// ESP_LOGI("main", "zl, zr = (%d,%d)\n", state.zl, state.zr);
+	ESP_LOGD("main", "lx,ly = (%3d,%3d)\n", state.lx, state.ly);
+	ESP_LOGD("main", "rx,ry = (%3d,%3d)\n", state.rx, state.ry);
+	ESP_LOGD("main", "a lt,rt = (%3d,%3d)\n", state.a_lt, state.a_rt);
+	ESP_LOGD("main", "d lt,rt = (%d,%d)\n", state.d_lt, state.d_rt);
+	ESP_LOGD("main", "a,b,x,y = (%d,%d,%d,%d)\n", state.a, state.b, state.x, state.y);
+	ESP_LOGD("main", "home, plus, minus = (%d,%d,%d)\n", state.home, state.plus, state.minus);
+	ESP_LOGD("main", "zl, zr = (%d,%d)\n", state.zl, state.zr);
+
+	unsigned char dpad = DPAD_CENTERED;
+	if (state.up || state.left || state.right || state.down) {
+		get_dpad(state, &dpad);
+	}
 
 	// jstest-gtk doesnt recognize this well but this should be the same as the xbox 360 controller....
 	int lefttrigger = -32767;
@@ -58,15 +89,18 @@ void show_classic(const unsigned char *data)
 	if (state.zr) {
 		righttrigger = 32767;
 	}
-	
+
 	// // (x, y, x2, y2, ?, ?, ?, ?, DPAD)
 	gp->setAxes(
-		scaleInput(state.lx, 28.0, 32767), 
-		-1 * scaleInput(state.ly, 28.0, 32767), 
-		scaleInput(state.rx, 14.0, 32767), 
-		-1 * scaleInput(state.ry, 14.0, 32767), 
-		lefttrigger, righttrigger, 
-		0, 0, 0
+		scaleInput(state.lx, 28.0, 32767), //x
+		-1 * scaleInput(state.ly, 28.0, 32767), //y 
+		scaleInput(state.rx, 14.0, 32767),  //z
+		-1 * scaleInput(state.ry, 14.0, 32767), //rz
+		lefttrigger, //rX
+		righttrigger, //rY
+		0, //slider1
+		0, //slider2
+		dpad // hat1
 	);
 
 	(state.b) ? gp->press(BUTTON_1) : gp->release(BUTTON_1);
@@ -77,9 +111,11 @@ void show_classic(const unsigned char *data)
 	(state.d_rt) ? gp->press(BUTTON_6) : gp->release(BUTTON_6);
 	(state.minus) ? gp->press(BUTTON_7) : gp->release(BUTTON_7);
 	(state.plus) ? gp->press(BUTTON_8) : gp->release(BUTTON_8);
-	(state.minus && state.a) ? gp->press(BUTTON_9) : gp->release(BUTTON_9);
-	(state.plus && state.a) ? gp->press(BUTTON_10) : gp->release(BUTTON_10);
-	// TODO: dpad
+	(state.home) ? gp->press(BUTTON_9) : gp->release(BUTTON_9);
+
+	// TODO: Think this out better since the classic controller doesn't have a joystick click.
+	// (state.minus && state.a) ? gp->press(BUTTON_9) : gp->release(BUTTON_10);
+	// (state.plus && state.a) ? gp->press(BUTTON_10) : gp->release(BUTTON_11);
 
 	gp->sendReport();
 }
