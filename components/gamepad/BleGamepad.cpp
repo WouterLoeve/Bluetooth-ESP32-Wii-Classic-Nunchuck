@@ -811,7 +811,7 @@ void BleGamepad::setBatteryLevel(uint8_t level)
 
 void BleGamepad::taskServer(void* pvParameter) 
 {
-  BleGamepad* BleGamepadInstance = (BleGamepad *) pvParameter; //static_cast<BleGamepad *>(pvParameter);
+  BleGamepad* BleGamepadInstance = (BleGamepad *) pvParameter;
   NimBLEDevice::init(BleGamepadInstance->deviceName);
   NimBLEServer *pServer = NimBLEDevice::createServer();
   pServer->setCallbacks(BleGamepadInstance->connectionStatus);
