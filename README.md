@@ -1,4 +1,4 @@
-# ESP32-Wii-Controller
+# Bluetooth-ESP32-Wii-Classic/Nunchuck 
 ESP32 Library which uses a [wii nunchuck/classic controller breakout adapter](https://www.aliexpress.com/item/32666887418.html) to read out the inputs from a nunchuck or wii classic controller and outputs them via bluetooth to another device. For this we use three libraries:
 1. [esp32-wii-nunchuk](https://github.com/moefh/esp32-wii-nunchuk): Used to communicate with the wii controllers
 2. [esp32-BLE-gamepad](https://github.com/lemmingDev/ESP32-BLE-Gamepad): Used to connect with a host via bluetooth and send input as HID device
