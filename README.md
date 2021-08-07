@@ -12,6 +12,12 @@ The first two libraries were originally meant for arduino but where converted to
 4. Execute ```idf.py menuconfig```
 5. Go to Component config->Bluetooth enable Bluetooth and in Bluetooth host NimBLE.
 
+## Customization
+- In menuconfig, set logging level to error. Since the bluetooth library mistakingly logs too much, very frequently. This will cause the (for me blue) LED on the development board to blink fast.
+- You can also set the core of the controller loop function by going to: Menuconfig -> Component Config -> Bluetooth -> NimBLE options.
+
+## Troubleshooting
+If you receive the no-data message the entire time, it might be a timing issue in the loop. Try to put some delay in there as seen in the original [wii_i2c code ](./components/esp32-wii-nunchuk/README.md).
 
 ## Folder contents
 

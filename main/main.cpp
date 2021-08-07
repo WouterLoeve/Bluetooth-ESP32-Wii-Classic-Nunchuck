@@ -23,6 +23,17 @@ BleGamepad *gp;
 wii_i2c_classic_state *classic_state = NULL;
 wii_i2c_nunchuk_state *nunchuk_state = NULL;
 
+// CPU id where the task will run (1=the core
+// where your code usually runs, 0=the other core):
+#define READ_TASK_CPU 1
+
+// Set in Menuconfig -> Component Config -> Bluetooth -> NimBLE options
+// Default = 0
+#define BT_CPU CONFIG_BT_NIMBLE_PINNED_TO_CORE
+
+// delay in milliseconds between controller reads:
+#define READ_DELAY 30
+
 /*
  * Scales joystick input as received from controller to a 
  * 		value range that can be understood by the BleGamePad library.
@@ -158,6 +169,7 @@ void show_classic(const unsigned char *data)
 		0,										//slider2
 		dpad									// hat1
 	);
+	gp->sendReport();
 
 	(classic_state->b) 		? gp->press(BUTTON_1) : gp->release(BUTTON_1);
 	(classic_state->a) 		? gp->press(BUTTON_2) : gp->release(BUTTON_2);
@@ -174,6 +186,7 @@ void show_classic(const unsigned char *data)
 
 /*
  * Setup for BleGamepad and library for reading out nunchuk and classic controller.
+ * Starts wii i2c read thread.
  */
 void setup()
 {
@@ -190,8 +203,14 @@ void setup()
 		ESP_LOGI("main", "no ident :(\n");
 		return;
 	}
-
 	controller_type = wii_i2c_decode_ident(ident);
+
+	// start the a task that reads the controller state in a different CPU:
+	if (wii_i2c_start_read_task(READ_TASK_CPU, READ_DELAY) != 0) {
+    	ESP_LOGI("setup", "Error creating task to read controller state");
+    	return;
+  	}
+
 	switch (controller_type)
 	{
 	case WII_I2C_IDENT_NUNCHUK:
@@ -214,51 +233,46 @@ void setup()
 		ESP_LOGI("main", "-> unknown controller detected: 0x%06x\n", controller_type);
 		break;
 	}
-	wii_i2c_request_state();
 }
 
 /*
  * The main loop of the program which:
- * 1. Reads input from the controller
+ * 1. Retrieves data from controller read thread.
  * 2. Calls the appropriate controller handling function.
  */
-void loop()
+void loop(void * pvParameters)
 {
-	const unsigned char *data = wii_i2c_read_state();
-	wii_i2c_request_state();
-	if (data)
-	{
-		switch (controller_type)
+	while (true) {
+		const unsigned char *data = wii_i2c_read_data_from_task();
+		if (data)
 		{
-		case WII_I2C_IDENT_NUNCHUK:
-			show_nunchuk(data);
-			break;
-		case WII_I2C_IDENT_CLASSIC:
-			show_classic(data);
-			break;
-		default:
-			ESP_LOGI("main", "data: %02x %02x %02x %02x %02x %02x\n",
-					 data[0], data[1], data[2], data[3], data[4], data[5]);
-			break;
+			switch (controller_type)
+			{
+			case WII_I2C_IDENT_NUNCHUK:
+				show_nunchuk(data);
+				break;
+			case WII_I2C_IDENT_CLASSIC:
+				show_classic(data);
+				break;
+			default:
+				ESP_LOGI("main", "data: %02x %02x %02x %02x %02x %02x\n",
+						data[0], data[1], data[2], data[3], data[4], data[5]);
+				break;
+			}
+		}
+		else
+		{
+			ESP_LOGD("main", "no data :(\n");
 		}
 	}
-	else
-	{
-		ESP_LOGI("main", "no data :(\n");
-	}
-
-	vTaskDelay(pdMS_TO_TICKS(100));
 }
 
 /*
- * Main function.
+ * Main function
+ * Calls setup and then starts the loop function in task on the same core as the NimBLE library.
  */
 void app_main()
 {
 	setup();
-
-	while (true)
-	{
-		loop();
-	}
+	xTaskCreatePinnedToCore(loop, "loop", 5000, NULL, 2, NULL, BT_CPU);
 }
