@@ -6,6 +6,8 @@
 #include "freertos/task.h"
 #include "esp_log.h"
 
+#include "esp_task_wdt.h"
+
 #include "BleGamepad.h"
 
 extern "C"
@@ -25,14 +27,12 @@ wii_i2c_nunchuk_state *nunchuk_state = NULL;
 
 // CPU id where the task will run (1=the core
 // where your code usually runs, 0=the other core):
-#define READ_TASK_CPU 1
+#define READ_TASK_CPU CONFIG_BT_NIMBLE_PINNED_TO_CORE
 
-// Set in Menuconfig -> Component Config -> Bluetooth -> NimBLE options
-// Default = 0
-#define BT_CPU CONFIG_BT_NIMBLE_PINNED_TO_CORE
+#define BT_CPU 1 
 
 // delay in milliseconds between controller reads:
-#define READ_DELAY 30
+#define READ_DELAY 10
 
 /*
  * Scales joystick input as received from controller to a 
@@ -230,7 +230,7 @@ void setup()
 		ESP_LOGI("main", "-> classic controller detected\n");
 		break;
 	default:
-		ESP_LOGI("main", "-> unknown controller detected: 0x%06x\n", controller_type);
+		ESP_LOGE("main", "-> unknown controller detected: 0x%06x\n", controller_type);
 		break;
 	}
 }
@@ -264,6 +264,7 @@ void loop(void * pvParameters)
 		{
 			ESP_LOGD("main", "no data :(\n");
 		}
+		vTaskDelay(pdMS_TO_TICKS(10));
 	}
 }
 
@@ -274,5 +275,9 @@ void loop(void * pvParameters)
 void app_main()
 {
 	setup();
-	xTaskCreatePinnedToCore(loop, "loop", 5000, NULL, 2, NULL, BT_CPU);
+
+	while (! gp->isConnected()) {
+		vTaskDelay(pdMS_TO_TICKS(1000));
+	}
+	xTaskCreatePinnedToCore(loop, "loop", 5000, NULL, 1, NULL, BT_CPU);
 }

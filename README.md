@@ -17,7 +17,9 @@ The first two libraries were originally meant for arduino but where converted to
 - You can also set the core of the controller loop function by going to: Menuconfig -> Component Config -> Bluetooth -> NimBLE options.
 
 ## Troubleshooting
-If you receive the no-data message the entire time, it might be a timing issue in the loop. Try to put some delay in there as seen in the original [wii_i2c code ](./components/esp32-wii-nunchuk/README.md).
+- If you receive the no-data message the entire time, it might be a timing issue in the loop. Try to put some delay in there as seen in the original [wii_i2c code ](./components/esp32-wii-nunchuk/README.md).
+- If your ESP keeps crashing with the message: "main", "-> unknown controller detected, make sure your controller is plugged in correctly.
+- If your ESP has watchdog problems, try increasing delays or open in a pull request with your own version.
 
 ## Folder contents
 
