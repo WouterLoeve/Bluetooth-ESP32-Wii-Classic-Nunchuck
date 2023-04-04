@@ -7,7 +7,7 @@ The first two libraries were originally meant for arduino but where converted to
 
 ## How to run
 1. Install esp-idf: https://docs.espressif.com/projects/esp-idf/en/latest/esp32/get-started/linux-setup.html
-2. Clone ```git@github.com:h2zero/esp-nimble-cpp.git``` from components dir (This should be a submodule....)
+2. Clone ```git@github.com:h2zero/esp-nimble-cpp.git``` from components dir (This should be a submodule....) and execute `git checkout tags/1.3.1`
 3. Execute ```idf.py menuconfig```
 4. Go to Component config->Bluetooth enable Bluetooth and in Bluetooth host NimBLE.
 5. build and flash your esp32
